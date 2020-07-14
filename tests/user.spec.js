@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../src/app');
 const User = require('../src/models/user');
-const { setUpDatabase } = require('./fixtures/db');
+const { setUpDatabase, userOne, userOneID } = require('./fixtures/db');
 
 /* eslint-disable no-undef */
 beforeEach(setUpDatabase);
@@ -57,5 +57,31 @@ describe('User SignUp', () => {
     // eslint-disable-next-line no-underscore-dangle
     const user = await User.findOne({ username: 'do' });
     expect(user).toBeNull();
+  });
+});
+
+describe('User Authentication', () => {
+  test('should login existing user', async () => {
+    const response = await request(app)
+      .post('/api/v1/users/login')
+      .send({
+        email: userOne.email,
+        password: userOne.password,
+      })
+      .expect(200);
+
+    const user = await User.findById(userOneID);
+
+    expect(response.body.token).toBe(user.tokens[1].token);
+  });
+
+  test('should not log in nonexistent user', async () => {
+    await request(app)
+      .post('/api/v1/users/login')
+      .send({
+        email: 'user@example.com',
+        password: userOne.password,
+      })
+      .expect(400);
   });
 });
