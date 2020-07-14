@@ -11,7 +11,7 @@ UserController.createUser = async (req, res) => {
     const userService = new userServices.CreateUserService(req.body);
 
     const registeredUser = await userService.createNewUser();
-    const token = registeredUser.generateAuthToken();
+    const token = await registeredUser.generateAuthToken();
 
     return res.status(HTTPStatus.CREATED).json({
       message: 'Account was created successfully',
