@@ -1,6 +1,7 @@
 const userSchemas = require('../schemas/userSchema');
 const userServices = require('../services/UserServices');
 const HTTPStatus = require('../lib/utils/httpStatus');
+const RESPONSEMANAGER = require('../lib/response_manager');
 
 const UserController = {};
 
@@ -13,16 +14,14 @@ UserController.createUser = async (req, res) => {
     const registeredUser = await userService.createNewUser();
     const token = await registeredUser.generateAuthToken();
 
-    return res.status(HTTPStatus.CREATED).json({
-      message: 'Account was created successfully',
-      user: registeredUser,
-      token,
-    });
+    return RESPONSEMANAGER.success(
+      res,
+      HTTPStatus.CREATED,
+      'Account was created successfully',
+      { user: registeredUser, token },
+    );
   } catch (err) {
-    if (err.statusCode) {
-      return res.status(err.statusCode).json({ error: err.message });
-    }
-    return res.status(HTTPStatus.BAD_REQUEST).json({ error: err.message });
+    return RESPONSEMANAGER.error(res, HTTPStatus.BAD_REQUEST, err);
   }
 };
 
