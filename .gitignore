@@ -1,0 +1,8 @@
+*node_modules
+*.vscode
+/node_modules
+/logs/*
+!/logs/.gitkeep
+/src/logs/*
+/coverage
+.env
