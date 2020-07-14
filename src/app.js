@@ -3,7 +3,6 @@ require('dotenv').config();
 const createError = require('http-errors');
 const bodyParser = require('body-parser');
 const express = require('express');
-require('./db/mongoose');
 const morgan = require('morgan');
 const winston = require('winston');
 const expressWinston = require('express-winston');

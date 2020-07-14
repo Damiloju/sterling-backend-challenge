@@ -4,7 +4,6 @@
   "description": "Create an API that serves the latest scores of fixtures of matches in a “**Mock Premier League**”",
   "main": "index.js",
   "scripts": {
-    "pretest": "NODE_ENV=test",
     "test": "NODE_PATH=./ NODE_ENV=test jest --coverage  --watch --notify --runInBand --forceExit",
     "start": "node server.js",
     "dev": "nodemon server.js"
@@ -37,11 +36,9 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.9",
     "mongoose": "^5.9.24",
-    "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.10.0",
     "prettier": "^2.0.5",
     "uuid": "^8.2.0",
-    "validator": "^13.1.1",
     "winston": "^3.3.3"
   },
   "devDependencies": {
