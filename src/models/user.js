@@ -49,6 +49,25 @@ const userSchema = new mongoose.Schema(
   },
 );
 
+userSchema.statics.findByCredentials = async (email, password) => {
+  // eslint-disable-next-line no-use-before-define
+  const user = await User.findOne({
+    email,
+  });
+
+  if (!user) {
+    throw new Error('Invalid Credentials');
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+
+  if (!isMatch) {
+    throw new Error('Invalid Credentials');
+  }
+
+  return user;
+};
+
 userSchema.methods.toJSON = function () {
   const user = this;
 

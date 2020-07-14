@@ -4,5 +4,6 @@
 const controller = {}; // Define the controller object ...
 
 controller.userController = require('./UserCotroller');
+controller.authController = require('./AuthController');
 
 module.exports = controller;
