@@ -4,5 +4,6 @@
 const teamSchema = {}; // Define the team schema object
 
 teamSchema.createTeamSchema = require('./createTeam');
+teamSchema.fetchTeams = require('./fetchTeams');
 
 module.exports = teamSchema;

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const teamSchema = new mongoose.Schema(
   {
@@ -33,6 +34,7 @@ teamSchema.methods.toJSON = function () {
 };
 
 teamSchema.plugin(uniqueValidator);
+teamSchema.plugin(mongoosePaginate);
 
 const Team = mongoose.model('Team', teamSchema);
 

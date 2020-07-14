@@ -24,4 +24,23 @@ TeamController.createTeam = async (req, res) => {
   }
 };
 
+TeamController.getAllTeams = async (req, res) => {
+  try {
+    await teamSchemas.fetchTeams.validate(req.query);
+
+    const fetchTeamService = new teamServices.FetchTeamService(req.query);
+
+    const teams = await fetchTeamService.fetchAllTeams();
+
+    return RESPONSEMANAGER.success(
+      res,
+      HTTPStatus.CREATED,
+      'Team fetched successfully',
+      { teams },
+    );
+  } catch (err) {
+    return RESPONSEMANAGER.error(res, HTTPStatus.BAD_REQUEST, err);
+  }
+};
+
 module.exports = TeamController;
