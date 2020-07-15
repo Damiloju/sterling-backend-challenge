@@ -1,5 +1,6 @@
 const success = (res, status, message, data) => {
-  const m = message;
+  //this guides against an eslint and prettier auto formatting
+  const m;
   return res.status(status).json({
     message,
     ...data,
