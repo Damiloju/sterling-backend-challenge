@@ -30,6 +30,9 @@ router.get(
   fixtureController.getAllCompletedFixtures,
 );
 
+// Search Fixtures
+router.get('/search', [checkDBConnection], fixtureController.searchFixtures);
+
 // Get a Fixture.
 router.get('/:id', [checkDBConnection, auth], fixtureController.getFixture);
 

@@ -43,6 +43,25 @@ TeamController.getAllTeams = async (req, res) => {
   }
 };
 
+TeamController.searchTeams = async (req, res) => {
+  try {
+    await teamSchemas.searchTeams.validate(req.query);
+
+    const fetchTeamService = new teamServices.SearchTeamService(req.query);
+
+    const teams = await fetchTeamService.searchTeams();
+
+    return RESPONSEMANAGER.success(
+      res,
+      HTTPStatus.OK,
+      'Teams fetched successfully',
+      { teams },
+    );
+  } catch (err) {
+    return RESPONSEMANAGER.error(res, HTTPStatus.BAD_REQUEST, err);
+  }
+};
+
 TeamController.getTeam = async (req, res) => {
   try {
     const fetchTeamService = new teamServices.FetchTeamService(req.params);

@@ -2,6 +2,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const mongoosePaginate = require('mongoose-paginate-v2');
+const idvalidator = require('mongoose-id-validator');
 
 const fixtureSchema = new mongoose.Schema(
   {
@@ -52,6 +53,7 @@ fixtureSchema.virtual('link').get(function () {
 
 fixtureSchema.plugin(uniqueValidator);
 fixtureSchema.plugin(mongoosePaginate);
+fixtureSchema.plugin(idvalidator);
 
 const Fixture = mongoose.model('Fixture', fixtureSchema);
 
