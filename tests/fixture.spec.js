@@ -102,8 +102,8 @@ describe('Fetching Fixtures', () => {
 
     expect(response.body).toMatchObject({
       fixture: {
-        homeTeamScore: 0,
-        awayTeamScore: 0,
+        homeTeamScore: null,
+        awayTeamScore: null,
         status: 'pending',
       },
     });

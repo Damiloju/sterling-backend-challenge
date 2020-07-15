@@ -26,11 +26,11 @@ const fixtureSchema = new mongoose.Schema(
     },
     homeTeamScore: {
       type: Number,
-      default: 0,
+      default: null,
     },
     awayTeamScore: {
       type: Number,
-      default: 0,
+      default: null,
     },
     status: {
       type: String,
