@@ -5,3 +5,4 @@
 !/logs/.gitkeep
 /coverage
 .env
+dump.rdb
