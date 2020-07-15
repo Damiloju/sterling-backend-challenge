@@ -64,4 +64,48 @@ FixtureController.getFixture = async (req, res) => {
   }
 };
 
+FixtureController.getAllCompletedFixtures = async (req, res) => {
+  try {
+    await fixtureSchemas.fetchFixturesSchema.validate(req.query);
+
+    const fetchFixtureService = new fixtureServices.FetchFixtureService(
+      req.query,
+      { status: 'completed' },
+    );
+
+    const fixtures = await fetchFixtureService.fetchAllFixtures();
+
+    return RESPONSEMANAGER.success(
+      res,
+      HTTPStatus.OK,
+      'Fixtures fetched successfully',
+      { fixtures },
+    );
+  } catch (err) {
+    return RESPONSEMANAGER.error(res, HTTPStatus.BAD_REQUEST, err);
+  }
+};
+
+FixtureController.getAllPendingFixtures = async (req, res) => {
+  try {
+    await fixtureSchemas.fetchFixturesSchema.validate(req.query);
+
+    const fetchFixtureService = new fixtureServices.FetchFixtureService(
+      req.query,
+      { status: 'pending' },
+    );
+
+    const fixtures = await fetchFixtureService.fetchAllFixtures();
+
+    return RESPONSEMANAGER.success(
+      res,
+      HTTPStatus.OK,
+      'Fixtures fetched successfully',
+      { fixtures },
+    );
+  } catch (err) {
+    return RESPONSEMANAGER.error(res, HTTPStatus.BAD_REQUEST, err);
+  }
+};
+
 module.exports = FixtureController;

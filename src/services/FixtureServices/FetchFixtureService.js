@@ -3,8 +3,9 @@ const CustomError = require('../../lib/Helpers/CustomError');
 const HTTPStatus = require('../../lib/utils/httpStatus');
 
 class FetchFixtureService {
-  constructor(resquestQuery) {
+  constructor(resquestQuery, query = {}) {
     this.resquestQuery = resquestQuery;
+    this.query = query;
   }
 
   async fetchAllFixtures() {
@@ -18,16 +19,13 @@ class FetchFixtureService {
       totalPages: 'pageCount',
     };
     try {
-      const fixtures = await Fixture.paginate(
-        {},
-        {
-          sort,
-          page,
-          limit,
-          pagination,
-          customLabels: myCustomLabels,
-        },
-      );
+      const fixtures = await Fixture.paginate(this.query, {
+        sort,
+        page,
+        limit,
+        pagination,
+        customLabels: myCustomLabels,
+      });
       return fixtures;
     } catch (error) {
       throw new Error(error);

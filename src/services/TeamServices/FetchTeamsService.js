@@ -3,8 +3,9 @@ const CustomError = require('../../lib/Helpers/CustomError');
 const HTTPStatus = require('../../lib/utils/httpStatus');
 
 class FetchTeamsService {
-  constructor(resquestQuery) {
+  constructor(resquestQuery, query = {}) {
     this.resquestQuery = resquestQuery;
+    this.query = query;
   }
 
   async fetchAllTeams() {
@@ -18,16 +19,13 @@ class FetchTeamsService {
       totalPages: 'pageCount',
     };
     try {
-      const teams = await Team.paginate(
-        {},
-        {
-          sort,
-          page,
-          limit,
-          pagination,
-          customLabels: myCustomLabels,
-        },
-      );
+      const teams = await Team.paginate(this.query, {
+        sort,
+        page,
+        limit,
+        pagination,
+        customLabels: myCustomLabels,
+      });
       return teams;
     } catch (error) {
       throw new Error(error);

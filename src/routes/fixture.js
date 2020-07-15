@@ -16,6 +16,20 @@ router.post(
 // Get all Fixtures.
 router.get('', [checkDBConnection, auth], fixtureController.getAllFixtures);
 
+// Get all pending Fixtures.
+router.get(
+  '/pending',
+  [checkDBConnection, auth],
+  fixtureController.getAllPendingFixtures,
+);
+
+// Get all pending Completed.
+router.get(
+  '/completed',
+  [checkDBConnection, auth],
+  fixtureController.getAllCompletedFixtures,
+);
+
 // Get a Fixture.
 router.get('/:id', [checkDBConnection, auth], fixtureController.getFixture);
 
