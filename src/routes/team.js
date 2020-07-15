@@ -12,6 +12,9 @@ router.post('', [checkDBConnection, auth, admin], teamController.createTeam);
 // Get all Teams.
 router.get('', [checkDBConnection, auth], teamController.getAllTeams);
 
+// Search team
+router.get('/search', [checkDBConnection], teamController.searchTeams);
+
 // Get a Team.
 router.get('/:id', [checkDBConnection, auth], teamController.getTeam);
 
