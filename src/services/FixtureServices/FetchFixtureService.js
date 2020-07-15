@@ -39,9 +39,9 @@ class FetchFixtureService {
     const fixture = await Fixture.findOne({
       _id: id,
     })
-      .populate('homeTeam')
-      .populate('awayTeam')
-      .populate('teamStadium');
+      .populate({ path: 'homeTeam', select: 'name' })
+      .populate({ path: 'awayTeam', select: 'name' })
+      .populate({ path: 'teamStadium', select: 'stadium' });
     if (!fixture) {
       throw new CustomError(HTTPStatus.NOT_FOUND, 'Fixture not found');
     }

@@ -2,7 +2,6 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const mongoosePaginate = require('mongoose-paginate-v2');
-const { v4: uuidv4 } = require('uuid');
 
 const fixtureSchema = new mongoose.Schema(
   {

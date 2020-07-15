@@ -4,5 +4,6 @@
 const fixtureSchema = {}; // Define the team schema object
 
 fixtureSchema.createFIxtureSchema = require('./createFixture');
+fixtureSchema.fetchFixturesSchema = require('./fetchFixtures');
 
 module.exports = fixtureSchema;

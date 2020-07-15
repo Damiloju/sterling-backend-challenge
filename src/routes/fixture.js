@@ -13,4 +13,10 @@ router.post(
   fixtureController.createFixture,
 );
 
+// Get all Fixtures.
+router.get('', [checkDBConnection, auth], fixtureController.getAllFixtures);
+
+// Get a Fixture.
+router.get('/:id', [checkDBConnection, auth], fixtureController.getFixture);
+
 module.exports = router;
