@@ -6,14 +6,8 @@ class SearchTeamsService {
   }
 
   async searchTeams() {
-    let name = '';
-    let stadium = '';
-    if (this.query.name) {
-      name = this.query.name;
-    }
-    if (this.query.stadium) {
-      stadium = this.query.stadium;
-    }
+    const name = this.query.name || '';
+    const stadium = this.query.stadium || '';
 
     const result = await Team.find({
       $and: [

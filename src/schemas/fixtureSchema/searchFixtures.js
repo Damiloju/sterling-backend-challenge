@@ -3,10 +3,11 @@ const Joi = require('@hapi/joi');
 const fetchFixtureSchema = {};
 
 fetchFixtureSchema.schema = Joi.object({
-  sort: Joi.string(),
-  page: Joi.number(),
-  limit: Joi.number(),
-  pagination: Joi.bool(),
+  homeTeam: Joi.string(),
+  awayTeam: Joi.string(),
+  teamStadium: Joi.string(),
+  date: Joi.date(),
+  status: Joi.string(),
 });
 
 // Validate the fixture schema

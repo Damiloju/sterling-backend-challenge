@@ -155,4 +155,25 @@ FixtureController.deleteFixture = async (req, res) => {
   }
 };
 
+FixtureController.searchFixtures = async (req, res) => {
+  try {
+    await fixtureSchemas.searchFixtureSchema.validate(req.query);
+
+    const searchFixtureServices = new fixtureServices.SearchFixtureService(
+      req.query,
+    );
+
+    const fixtures = await searchFixtureServices.searchFixtures();
+
+    return RESPONSEMANAGER.success(
+      res,
+      HTTPStatus.OK,
+      'Fixtures fetched successfully',
+      { fixtures },
+    );
+  } catch (err) {
+    return RESPONSEMANAGER.error(res, HTTPStatus.BAD_REQUEST, err);
+  }
+};
+
 module.exports = FixtureController;
