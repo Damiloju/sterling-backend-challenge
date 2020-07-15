@@ -48,6 +48,15 @@ const teamOne = {
   stadium: 'Vintage Road',
 };
 
+const fixtureOneID = new mongoose.Types.ObjectId();
+const fixtureOne = {
+  _id: fixtureOneID,
+  homeTeam: teamOneID,
+  awayTeam: teamOneID,
+  teamStadium: teamOneID,
+  date: new Date(),
+};
+
 const setUpDatabase = async () => {
   await User.deleteMany();
   await Team.deleteMany();
@@ -55,6 +64,7 @@ const setUpDatabase = async () => {
   await new User(userOne).save();
   await new User(userTwo).save();
   await new Team(teamOne).save();
+  await new Fixture(fixtureOne).save();
 };
 
 module.exports = {
@@ -65,4 +75,5 @@ module.exports = {
   userTwoID,
   teamOne,
   teamOneID,
+  fixtureOneID,
 };
