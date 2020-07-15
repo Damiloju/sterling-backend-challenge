@@ -6,11 +6,19 @@ const admin = require('../middlewares/admin');
 
 const router = express.Router();
 
-// Create a new User.
+// Create a new Team.
 router.post('', [checkDBConnection, auth, admin], teamController.createTeam);
+
+// Get all Teams.
 router.get('', [checkDBConnection, auth], teamController.getAllTeams);
+
+// Get a Team.
 router.get('/:id', [checkDBConnection, auth], teamController.getTeam);
+
+// Update a Team.
 router.patch('/:id', [checkDBConnection, auth, admin], teamController.editTeam);
+
+// Delete a Team
 router.delete(
   '/:id',
   [checkDBConnection, auth, admin],
