@@ -1,7 +1,5 @@
 const Fixture = require('../../models/fixture');
 const FetchTeamService = require('../TeamServices/FetchTeamsService');
-const CustomError = require('../../lib/Helpers/CustomError');
-const HTTPStatus = require('../../lib/utils/httpStatus');
 
 class CreateFixtureService {
   constructor(fixtureData) {
@@ -40,14 +38,17 @@ class CreateFixtureService {
 
     try {
       await this.addFixtureToTeams(fixture);
+      return {
+        data: fixture,
+        error: false,
+      };
     } catch (error) {
-      throw new CustomError(
-        HTTPStatus.INTERNAL_SERVER_ERROR,
-        'Fixture created successfully, but it could not be added to the teans fixtures list',
-      );
+      return {
+        data: fixture,
+        error:
+          'Fixture created successfully, but it could not be added to the teams fixtures list',
+      };
     }
-
-    return fixture;
   }
 }
 module.exports = CreateFixtureService;
