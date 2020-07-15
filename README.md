@@ -1,31 +1,29 @@
 # Software Developer Application Test
 
-Create an API that serves the latest scores of fixtures of matches in a “**Mock Premier League**”
+Create an API that serves the latest scores of fixtures of matches in a “Mock Premier League”
 
-## User Types
+## Features
 
-There should be:
+**Admin accounts** which are used to
 
-- **Admin accounts** which are used to
-  - signup/login
-  - manage teams (add, remove, edit, view)
-  - create fixtures (add, remove, edit, view)
-  - Generate unique links for fixture
-- **Users accounts** who can
-  - signup/login
-  - view teams
-  - view completed fixtures
-  - view pending fixtures
-  - robustly search fixtures/teams
-- Only the search API should be availble to the public.
+- signup/login
+- manage teams (add, remove, edit, view)
+- create fixtures (add, remove, edit, view)
+- Generate unique links for fixture
 
-## Authentication and Session Management
-1. Use redis as your session store.
-3. Authentication and Authorization for admin and user accounts should be done using `Bearer token` and `JWT`.
+**Users accounts** who can
 
-## Tools/Stack
+- signup/login
+- view teams
+- view completed fixtures
+- view pending fixtures
+- obustly search fixtures/teams
 
-- NodeJs (JavaScript or TypeScript)
+> Only the search API should be availble to the public.
+
+## Technologies
+
+- NodeJs (JavaScript)
 - MongoDB
 - Redis
 - Docker
@@ -33,30 +31,42 @@ There should be:
 - Jest
 - Express
 
-## Tests
+## Requirements and Installation
 
-Unit tests are a must, submissions without tests will be ignored.
+To install and run this project you would need to have listed stack installed:
 
-## Submission
+- Node.js
+- Docker
+- Redis
 
-1. Your API endpoints should be documented in POSTMAN.
-2. Seed the db with lots of data before final submission.
-3. Code should be hosted on a git repository, Github preferably.
-4. The API should be hosted on a live server (e.g. https://heroku.com)
+- To run:
 
-## Bonus
+```sh
+git clone <hgit@github.com:Damiloju/sterling-backend-challenge.git>
+cd sterling-backend-challenge
+npm install
+copy .env.example  .env
+npm run dev
+```
 
-You'll get bonus points for:
-1. `containerization` using `docker`.
-2. Thorough documentation using POSTMAN.
-3. e2e tests and use of `Jest` for tests.
-4. `web caching` API endpoints using `Redis`.
-5. Implementing `rate limiting` for user account API access.
+## Docker Development Setup
 
-## Time Duration
+- Install Docker
+- Change to application root directory
+- Build a docker image with the following command `docker build -t sterling-backend-challenge .`
+<!-- - Run `docker-compose up` -->
 
-7 days
+## Testing
 
-## NB:
+```sh
+npm run test
+```
 
-Please send an email to acknowledge the receipt of this document.
+## API
+
+The API is hosted at
+[Api URL]()
+
+## API Documentation
+
+[Postman Documentation](https://documenter.getpostman.com/view/2028908/T17Q6Qgi?version=latest)
