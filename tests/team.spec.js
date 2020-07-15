@@ -18,8 +18,8 @@ describe('Team Creation', () => {
       .expect(201);
 
     // eslint-disable-next-line no-underscore-dangle
-    const user = await Team.findById(response.body.team._id);
-    expect(user).not.toBeNull();
+    const team = await Team.findById(response.body.team._id);
+    expect(team).not.toBeNull();
 
     expect(response.body).toMatchObject({
       team: {
@@ -56,5 +56,20 @@ describe('Team Creation', () => {
     // eslint-disable-next-line no-underscore-dangle
     const team = await Team.findById(response.body.team);
     expect(team).toBeNull();
+  });
+});
+
+describe('Fetching Teams', () => {
+  test('should fetch all teams for an authenticated user', async () => {
+    const response = await request(app)
+      .get('/api/v1/teams')
+      .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+      .expect(200);
+
+    // eslint-disable-next-line no-underscore-dangle
+    const teams = response.body.teams.data;
+    expect(teams).not.toBeNull();
+
+    expect(teams.length).toBe(0);
   });
 });

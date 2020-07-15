@@ -34,7 +34,7 @@ TeamController.getAllTeams = async (req, res) => {
 
     return RESPONSEMANAGER.success(
       res,
-      HTTPStatus.CREATED,
+      HTTPStatus.OK,
       'Team fetched successfully',
       { teams },
     );
