@@ -83,7 +83,7 @@ describe('Fetching Teams', () => {
     await request(app).get('/api/v1/teams').expect(401);
   });
 
-  test('should fetch all team with a given id for an unauthenticated user', async () => {
+  test('should fetch a team with a given id for an authenticated user', async () => {
     const response = await request(app)
       .get(`/api/v1/teams/${teamOneID}`)
       .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
@@ -98,5 +98,66 @@ describe('Fetching Teams', () => {
         stadium: teamOne.stadium,
       },
     });
+  });
+});
+
+describe('Team Update and Deletion', () => {
+  test('should update a team with a given id for an authenticated user', async () => {
+    const response = await request(app)
+      .patch(`/api/v1/teams/${teamOneID}`)
+      .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+      .send({
+        name: 'dongun',
+        stadium: 'dami.com',
+      })
+      .expect(200);
+
+    const team = await Team.findById(teamOneID);
+    expect(team).not.toBeNull();
+
+    expect(response.body).toMatchObject({
+      team: {
+        name: 'dongun',
+        stadium: 'dami.com',
+      },
+    });
+  });
+
+  test('should not update a team with disallowed for an authenticated user', async () => {
+    await request(app)
+      .patch(`/api/v1/teams/${teamOneID}`)
+      .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+      .send({
+        name: 'dongun',
+        createdAt: 'dami.com',
+      })
+      .expect(400);
+  });
+
+  test("should not update a team for a user who's not an administrator", async () => {
+    await request(app)
+      .patch(`/api/v1/teams/${teamOneID}`)
+      .set('Authorization', `Bearer ${userTwo.tokens[0].token}`)
+      .send({
+        name: 'dongun',
+      })
+      .expect(401);
+  });
+
+  test('should delete a team with a given id for an authenticated user', async () => {
+    await request(app)
+      .delete(`/api/v1/teams/${teamOneID}`)
+      .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+      .expect(200);
+
+    const team = await Team.findById(teamOneID);
+    expect(team).toBeNull();
+  });
+
+  test('should not delete a team for an unauthenticated user', async () => {
+    await request(app).delete(`/api/v1/teams/${teamOneID}`).expect(401);
+
+    const team = await Team.findById(teamOneID);
+    expect(team).not.toBeNull();
   });
 });
