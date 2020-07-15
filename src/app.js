@@ -7,6 +7,11 @@ require('./db/mongoose');
 const morgan = require('morgan');
 const winston = require('winston');
 const expressWinston = require('express-winston');
+const session = require('express-session');
+const redis = require('redis');
+
+const redisClient = redis.createClient();
+const RedisStore = require('connect-redis')(session);
 const winstonOptions = require('./config/winston');
 
 const logger = require('./logger');
@@ -18,6 +23,26 @@ const HTTPStatus = require('./lib/utils/httpStatus');
 const appRoutes = require('./routes/index');
 
 const app = express();
+
+redisClient.on('error', (err) => {
+  logger.error('Redis error: ', err);
+});
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    name: process.env.APP_NAME,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }, // Note that the cookie-parser module is no longer needed
+    store: new RedisStore({
+      host: process.env.REDIS_HOST,
+      port: process.env.REDIST_PORT,
+      client: redisClient,
+      ttl: 86400,
+    }),
+  }),
+);
 
 // Define the accepted request type
 app.use(bodyParser.urlencoded({ extended: true }));
