@@ -110,4 +110,63 @@ describe('Fetching Fixtures', () => {
   });
 });
 
-describe('Fixture Update and Deletion', () => {});
+describe('Fixture Update and Deletion', () => {
+  test('should update a fixture with a given id for an authenticated user', async () => {
+    const response = await request(app)
+      .patch(`/api/v1/fixtures/${fixtureOneID}`)
+      .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+      .send({
+        status: 'completed',
+        homeTeamScore: 3,
+        awayTeamScore: 3,
+      })
+      .expect(200);
+
+    const fixture = await Fixture.findById(fixtureOneID);
+    expect(fixture).not.toBeNull();
+
+    expect(response.body).toMatchObject({
+      fixture: {
+        status: 'completed',
+        homeTeamScore: 3,
+        awayTeamScore: 3,
+      },
+    });
+  });
+  test('should not update a fixture with disallowed fields for an authenticated user', async () => {
+    await request(app)
+      .patch(`/api/v1/fixtures/${fixtureOneID}`)
+      .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+      .send({
+        createdAt: new Date(),
+      })
+      .expect(400);
+  });
+
+  test("should not update a fixture for a user who's not an administrator", async () => {
+    await request(app)
+      .patch(`/api/v1/fixtures/${fixtureOneID}`)
+      .set('Authorization', `Bearer ${userTwo.tokens[0].token}`)
+      .send({
+        name: 'dongun',
+      })
+      .expect(401);
+  });
+
+  test('should delete a fixture with a given id for an authenticated user', async () => {
+    await request(app)
+      .delete(`/api/v1/fixtures/${fixtureOneID}`)
+      .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+      .expect(200);
+
+    const fixture = await Fixture.findById(fixtureOneID);
+    expect(fixture).toBeNull();
+  });
+
+  test('should not delete a fixture for an unauthenticated user', async () => {
+    await request(app).delete(`/api/v1/fixtures/${fixtureOneID}`).expect(401);
+
+    const fixture = await Fixture.findById(fixtureOneID);
+    expect(fixture).not.toBeNull();
+  });
+});
