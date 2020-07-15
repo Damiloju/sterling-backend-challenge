@@ -86,4 +86,21 @@ TeamController.editTeam = async (req, res) => {
   }
 };
 
+TeamController.deleteTeam = async (req, res) => {
+  try {
+    const updateTeamService = new teamServices.UpdateTeamService(req.params);
+
+    const deletededTeam = await updateTeamService.deleteTeam();
+
+    return RESPONSEMANAGER.success(
+      res,
+      HTTPStatus.OK,
+      'Team deleted successfully',
+      { team: deletededTeam },
+    );
+  } catch (err) {
+    return RESPONSEMANAGER.error(res, HTTPStatus.BAD_REQUEST, err);
+  }
+};
+
 module.exports = TeamController;

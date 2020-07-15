@@ -1,3 +1,7 @@
+const Team = require('../../models/team');
+const CustomError = require('../../lib/Helpers/CustomError');
+const HTTPStatus = require('../../lib/utils/httpStatus');
+
 class UpdateTeamService {
   constructor(resquestData, team) {
     this.resquestData = resquestData;
@@ -30,6 +34,20 @@ class UpdateTeamService {
       validateBeforeSave: true,
     });
 
+    return team;
+  }
+
+  async deleteTeam() {
+    // eslint-disable-next-line no-underscore-dangle
+    const _id = this.resquestData.id;
+
+    const team = await Team.findOneAndDelete({
+      _id,
+    });
+
+    if (!team) {
+      throw new CustomError(HTTPStatus.NOT_FOUND, 'Team not found');
+    }
     return team;
   }
 }
