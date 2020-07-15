@@ -11,6 +11,6 @@ router.use('/teams', teamRoutes);
 router.use('/fixtures', fixtureRoutes);
 
 // GET home page.
-router.get('/', (req, res) => res.send({ msg: 'Evisit Portal Api 1.0' }));
+router.get('/', (req, res) => res.send({ msg: 'Sterling Backend Api 1.0' }));
 
 module.exports = router;
