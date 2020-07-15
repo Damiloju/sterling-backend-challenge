@@ -60,4 +60,30 @@ TeamController.getTeam = async (req, res) => {
   }
 };
 
+TeamController.editTeam = async (req, res) => {
+  try {
+    await teamSchemas.editTeam.validate(req.body);
+
+    const fetchTeamService = new teamServices.FetchTeamService(req.params);
+
+    const team = await fetchTeamService.fetchTeam();
+
+    const updateTeamService = new teamServices.UpdateTeamService(
+      req.body,
+      team,
+    );
+
+    const updatedTeam = await updateTeamService.updateTeamRecords();
+
+    return RESPONSEMANAGER.success(
+      res,
+      HTTPStatus.OK,
+      'Team updated successfully',
+      { team: updatedTeam },
+    );
+  } catch (err) {
+    return RESPONSEMANAGER.error(res, HTTPStatus.BAD_REQUEST, err);
+  }
+};
+
 module.exports = TeamController;

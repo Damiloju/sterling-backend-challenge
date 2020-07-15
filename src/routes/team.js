@@ -10,5 +10,6 @@ const router = express.Router();
 router.post('', [checkDBConnection, auth, admin], teamController.createTeam);
 router.get('', [checkDBConnection, auth], teamController.getAllTeams);
 router.get('/:id', [checkDBConnection, auth], teamController.getTeam);
+router.patch('/:id', [checkDBConnection, auth, admin], teamController.editTeam);
 
 module.exports = router;
