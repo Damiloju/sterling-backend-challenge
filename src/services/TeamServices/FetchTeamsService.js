@@ -38,7 +38,7 @@ class FetchTeamsService {
     const { id } = this.resquestQuery;
     const team = await Team.findOne({
       _id: id,
-    });
+    }).populate('fixtures');
     if (!team) {
       throw new CustomError(HTTPStatus.NOT_FOUND, 'Team not found');
     }
