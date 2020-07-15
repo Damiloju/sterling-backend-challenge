@@ -33,4 +33,18 @@ router.get(
 // Get a Fixture.
 router.get('/:id', [checkDBConnection, auth], fixtureController.getFixture);
 
+// Update a Fixture.
+router.patch(
+  '/:id',
+  [checkDBConnection, auth, admin],
+  fixtureController.editFixture,
+);
+
+// Delete a Fixture
+router.delete(
+  '/:id',
+  [checkDBConnection, auth, admin],
+  fixtureController.deleteFixture,
+);
+
 module.exports = router;

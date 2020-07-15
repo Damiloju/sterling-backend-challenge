@@ -108,4 +108,51 @@ FixtureController.getAllPendingFixtures = async (req, res) => {
   }
 };
 
+FixtureController.editFixture = async (req, res) => {
+  try {
+    await fixtureSchemas.editFixtureSchema.validate(req.body);
+
+    const fetchFixtureService = new fixtureServices.FetchFixtureService(
+      req.params,
+    );
+
+    const fixture = await fetchFixtureService.fetchFixture();
+
+    const updateFixtureService = new fixtureServices.UpdateFixtureService(
+      req.body,
+      fixture,
+    );
+
+    const updatedFixture = await updateFixtureService.updateFixtureRecords();
+
+    return RESPONSEMANAGER.success(
+      res,
+      HTTPStatus.OK,
+      'Fixture updated successfully',
+      { fixture: updatedFixture },
+    );
+  } catch (err) {
+    return RESPONSEMANAGER.error(res, HTTPStatus.BAD_REQUEST, err);
+  }
+};
+
+FixtureController.deleteFixture = async (req, res) => {
+  try {
+    const updateFixtureService = new fixtureServices.UpdateFixtureService(
+      req.params,
+    );
+
+    const deletededFixture = await updateFixtureService.deleteFixture();
+
+    return RESPONSEMANAGER.success(
+      res,
+      HTTPStatus.OK,
+      'Fixture deleted successfully',
+      { fixture: deletededFixture },
+    );
+  } catch (err) {
+    return RESPONSEMANAGER.error(res, HTTPStatus.BAD_REQUEST, err);
+  }
+};
+
 module.exports = FixtureController;
