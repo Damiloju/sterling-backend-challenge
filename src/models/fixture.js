@@ -41,21 +41,15 @@ const fixtureSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
   },
 );
 
-fixtureSchema.virtual('link').get(() => {
+fixtureSchema.virtual('link').get(function () {
   const { APP_URL } = process.env;
-  return `${APP_URL}/watch-game/${uuidv4()}`;
+  // eslint-disable-next-line no-underscore-dangle
+  return `${APP_URL}/watch-game/${this._id}`;
 });
-
-fixtureSchema.methods.toJSON = function () {
-  const fixture = this;
-
-  const fixtureObject = fixture.toObject();
-
-  return fixtureObject;
-};
 
 fixtureSchema.plugin(uniqueValidator);
 fixtureSchema.plugin(mongoosePaginate);
