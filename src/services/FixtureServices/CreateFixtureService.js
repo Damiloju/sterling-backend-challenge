@@ -24,9 +24,9 @@ class CreateFixtureService {
     }).fetchTeam();
 
     // eslint-disable-next-line no-underscore-dangle
-    homeTeam.fixtures = homeTeam.fixtures.concat(fixture._id);
+    await homeTeam.fixtures.push(fixture._id);
     // eslint-disable-next-line no-underscore-dangle
-    awayTeam.fixtures = awayTeam.fixtures.concat(fixture._id);
+    await awayTeam.fixtures.push(fixture._id);
 
     await homeTeam.save();
     await awayTeam.save();
