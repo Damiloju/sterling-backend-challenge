@@ -3,6 +3,6 @@
  */
 const authSchema = {}; // Define the user schema object
 
-authSchema.authenticateUserSchema = require('./authenticateUserSchema');
+authSchema.authenticateUserSchema = require('./authenticateUser');
 
 module.exports = authSchema;
