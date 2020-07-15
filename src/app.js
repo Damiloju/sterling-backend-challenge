@@ -4,6 +4,7 @@ const createError = require('http-errors');
 const bodyParser = require('body-parser');
 const express = require('express');
 require('./db/mongoose');
+require('./lib/utils/cache');
 const morgan = require('morgan');
 const winston = require('winston');
 const expressWinston = require('express-winston');
@@ -36,7 +37,7 @@ app.use(
     name: process.env.APP_NAME,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }, // Note that the cookie-parser module is no longer needed
+    cookie: { secure: false },
     store: new RedisStore({
       host: process.env.REDIS_HOST,
       port: process.env.REDIST_PORT,
@@ -46,7 +47,6 @@ app.use(
   }),
 );
 
-// Define the accepted request type
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 

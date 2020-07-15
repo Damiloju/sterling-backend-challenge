@@ -28,7 +28,9 @@ class SearchFixturesService {
         path: 'teamStadium',
         match: { stadium: { $regex: `.*${teamStadium}.*`, $options: 'i' } },
         select: 'name stadium',
-      });
+      })
+
+      .cache();
 
     if (this.homeTeam !== '') {
       results = results.filter((result) => {

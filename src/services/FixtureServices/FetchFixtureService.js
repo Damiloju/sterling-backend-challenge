@@ -39,7 +39,8 @@ class FetchFixtureService {
     })
       .populate({ path: 'homeTeam', select: 'name' })
       .populate({ path: 'awayTeam', select: 'name' })
-      .populate({ path: 'teamStadium', select: 'stadium' });
+      .populate({ path: 'teamStadium', select: 'stadium' })
+      .cache();
     if (!fixture) {
       throw new CustomError(HTTPStatus.NOT_FOUND, 'Fixture not found');
     }
