@@ -19,6 +19,12 @@ const teamSchema = new mongoose.Schema(
       lowerCase: true,
       minlength: 5,
     },
+    fixtures: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Fixture',
+      },
+    ],
   },
   {
     timestamps: true,

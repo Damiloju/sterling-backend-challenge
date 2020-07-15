@@ -1,14 +1,14 @@
-const Team = require('../../models/team');
+const Fixture = require('../../models/fixture');
 const CustomError = require('../../lib/Helpers/CustomError');
 const HTTPStatus = require('../../lib/utils/httpStatus');
 
-class FetchTeamsService {
+class FetchFixtureService {
   constructor(resquestQuery, query = {}) {
     this.resquestQuery = resquestQuery;
     this.query = query;
   }
 
-  async fetchAllTeams() {
+  async fetchAllFixtures() {
     const { sort = 'desc' } = this.resquestQuery;
     const { page = 1 } = this.resquestQuery;
     const { limit = 10 } = this.resquestQuery;
@@ -19,29 +19,32 @@ class FetchTeamsService {
       totalPages: 'pageCount',
     };
     try {
-      const teams = await Team.paginate(this.query, {
+      const fixtures = await Fixture.paginate(this.query, {
         sort,
         page,
         limit,
         pagination,
         customLabels: myCustomLabels,
       });
-      return teams;
+      return fixtures;
     } catch (error) {
       throw new Error(error);
     }
   }
 
-  async fetchTeam() {
+  async fetchFixture() {
     const { id } = this.resquestQuery;
-    const team = await Team.findOne({
+    const fixture = await Fixture.findOne({
       _id: id,
-    }).populate('fixtures');
-    if (!team) {
-      throw new CustomError(HTTPStatus.NOT_FOUND, 'Team not found');
+    })
+      .populate({ path: 'homeTeam', select: 'name' })
+      .populate({ path: 'awayTeam', select: 'name' })
+      .populate({ path: 'teamStadium', select: 'stadium' });
+    if (!fixture) {
+      throw new CustomError(HTTPStatus.NOT_FOUND, 'Fixture not found');
     }
-    return team;
+    return fixture;
   }
 }
 
-module.exports = FetchTeamsService;
+module.exports = FetchFixtureService;

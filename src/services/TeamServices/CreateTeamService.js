@@ -13,7 +13,7 @@ class CreateTeamService {
     return team;
   }
 
-  // Register a new user
+  // Register a new fixture
   async createNewTeam() {
     const team = await this.storeTeamDetails();
 
