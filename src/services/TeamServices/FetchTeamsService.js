@@ -1,4 +1,6 @@
 const Team = require('../../models/team');
+const CustomError = require('../../lib/Helpers/CustomError');
+const HTTPStatus = require('../../lib/utils/httpStatus');
 
 class FetchTeamsService {
   constructor(resquestQuery) {
@@ -30,6 +32,17 @@ class FetchTeamsService {
     } catch (error) {
       throw new Error(error);
     }
+  }
+
+  async fetchTeam() {
+    const { id } = this.resquestQuery;
+    const team = await Team.findOne({
+      _id: id,
+    });
+    if (!team) {
+      throw new CustomError(HTTPStatus.NOT_FOUND, 'Team not found');
+    }
+    return team;
   }
 }
 

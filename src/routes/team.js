@@ -9,5 +9,6 @@ const router = express.Router();
 // Create a new User.
 router.post('', [checkDBConnection, auth, admin], teamController.createTeam);
 router.get('', [checkDBConnection, auth], teamController.getAllTeams);
+router.get('/:id', [checkDBConnection, auth], teamController.getTeam);
 
 module.exports = router;

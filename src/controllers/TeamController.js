@@ -35,8 +35,25 @@ TeamController.getAllTeams = async (req, res) => {
     return RESPONSEMANAGER.success(
       res,
       HTTPStatus.OK,
-      'Team fetched successfully',
+      'Teams fetched successfully',
       { teams },
+    );
+  } catch (err) {
+    return RESPONSEMANAGER.error(res, HTTPStatus.BAD_REQUEST, err);
+  }
+};
+
+TeamController.getTeam = async (req, res) => {
+  try {
+    const fetchTeamService = new teamServices.FetchTeamService(req.params);
+
+    const team = await fetchTeamService.fetchTeam();
+
+    return RESPONSEMANAGER.success(
+      res,
+      HTTPStatus.OK,
+      'Team fetched successfully',
+      { team },
     );
   } catch (err) {
     return RESPONSEMANAGER.error(res, HTTPStatus.BAD_REQUEST, err);
