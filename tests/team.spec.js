@@ -1,7 +1,13 @@
 const request = require('supertest');
 const app = require('../src/app');
 const Team = require('../src/models/team');
-const { setUpDatabase, userOne, userTwo } = require('./fixtures/db');
+const {
+  setUpDatabase,
+  userOne,
+  userTwo,
+  teamOne,
+  teamOneID,
+} = require('./fixtures/db');
 
 /* eslint-disable no-undef */
 beforeEach(setUpDatabase);
@@ -70,6 +76,27 @@ describe('Fetching Teams', () => {
     const teams = response.body.teams.data;
     expect(teams).not.toBeNull();
 
-    expect(teams.length).toBe(0);
+    expect(teams.length).toBe(1);
+  });
+
+  test('should not fetch all teams for an unauthenticated user', async () => {
+    await request(app).get('/api/v1/teams').expect(401);
+  });
+
+  test('should fetch all team with a given id for an unauthenticated user', async () => {
+    const response = await request(app)
+      .get(`/api/v1/teams/${teamOneID}`)
+      .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+      .expect(200);
+
+    const teams = response.body.team;
+    expect(teams).not.toBeNull();
+
+    expect(response.body).toMatchObject({
+      team: {
+        name: teamOne.name,
+        stadium: teamOne.stadium,
+      },
+    });
   });
 });

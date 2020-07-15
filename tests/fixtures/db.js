@@ -40,11 +40,19 @@ const userTwo = {
   ],
 };
 
+const teamOneID = new mongoose.Types.ObjectId();
+const teamOne = {
+  _id: teamOneID,
+  name: 'Newcastle United',
+  stadium: 'Vintage Road',
+};
+
 const setUpDatabase = async () => {
   await User.deleteMany();
   await Team.deleteMany();
   await new User(userOne).save();
   await new User(userTwo).save();
+  await new Team(teamOne).save();
 };
 
 module.exports = {
@@ -53,4 +61,6 @@ module.exports = {
   setUpDatabase,
   userTwo,
   userTwoID,
+  teamOne,
+  teamOneID,
 };
