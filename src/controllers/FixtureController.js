@@ -7,7 +7,7 @@ const FixtureController = {};
 
 FixtureController.createFixture = async (req, res) => {
   try {
-    await fixtureSchemas.createFixtureSchema.validate(req.body);
+    await fixtureSchemas.createFIxtureSchema.validate(req.body);
 
     const fixtureService = new fixtureServices.CreateFixtureService(req.body);
 
