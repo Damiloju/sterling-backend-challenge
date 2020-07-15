@@ -24,6 +24,8 @@ const appRoutes = require('./routes/index');
 
 const app = express();
 
+app.set('trust proxy', 1);
+
 redisClient.on('error', (err) => {
   logger.error('Redis error: ', err);
 });
