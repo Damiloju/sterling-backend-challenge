@@ -46,8 +46,8 @@ describe('Team Creation', () => {
       .expect(401);
 
     // eslint-disable-next-line no-underscore-dangle
-    const team = await Team.findById(response.body.team);
-    expect(team).toBeNull();
+    const { team } = response.body;
+    expect(team).toBeUndefined();
   });
 
   test('should not create a new team for an unauthenticated user', async () => {
@@ -60,8 +60,8 @@ describe('Team Creation', () => {
       .expect(401);
 
     // eslint-disable-next-line no-underscore-dangle
-    const team = await Team.findById(response.body.team);
-    expect(team).toBeNull();
+    const { team } = response.body;
+    expect(team).toBeUndefined();
   });
 });
 
