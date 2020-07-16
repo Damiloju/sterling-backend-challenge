@@ -42,10 +42,11 @@ To install and run this project you would need to have listed stack installed:
 - To run:
 
 ```sh
-git clone <hgit@github.com:Damiloju/sterling-backend-challenge.git>
+git clone <git@github.com:Damiloju/sterling-backend-challenge.git>
 cd sterling-backend-challenge
 npm install
 copy .env.example  .env
+Fill in needed env values
 npm run dev
 ```
 
@@ -54,7 +55,8 @@ npm run dev
 - Install Docker
 - Change to application root directory
 - Build a docker image with the following command `docker build -t sterling-backend-challenge .`
-<!-- - Run `docker-compose up` -->
+- Run `docker-compose up -d`
+- Stop Container `docker-compose down`
 
 ## Testing
 
