@@ -59,13 +59,13 @@ describe('Team Services', () => {
       });
     });
 
-    test('should fetch a all teams', async () => {
+    test('should fetch all teams', async () => {
       const teams = await fetchTeamService.fetchAllTeams();
       expect(teams).not.toBeNull();
       expect(teams).toMatchObject({ data: [{}] });
     });
 
-    test('should throw an error for a team those not exists', async () => {
+    test('should throw an error for a team that those not exists', async () => {
       const newData = { id: userOneID };
       fetchTeamService = new teamServices.FetchTeamService(newData);
       expect(fetchTeamService.fetchTeam()).rejects.toThrowError();
