@@ -1,13 +1,13 @@
 const request = require('supertest');
-const app = require('../src/app');
-const Team = require('../src/models/team');
+const app = require('../../src/app');
+const Team = require('../../src/models/team');
 const {
   setUpDatabase,
   userOne,
   userTwo,
   teamOne,
   teamOneID,
-} = require('./fixtures/db');
+} = require('../fixtures/db');
 
 /* eslint-disable no-undef */
 beforeEach(setUpDatabase);

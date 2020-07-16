@@ -32,7 +32,9 @@ if (process.env.NODE_ENV === 'test') {
 mongoose
   .connect(connectionURL, options)
   .then(() => {
-    logger.info('MongoDB is connected');
+    if (process.env.NODE_ENV !== 'test') {
+      logger.info('MongoDB is connected');
+    }
   })
   .catch((err) => {
     logger.error(err);

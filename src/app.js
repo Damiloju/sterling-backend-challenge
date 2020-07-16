@@ -10,9 +10,12 @@ const expressWinston = require('express-winston');
 const session = require('express-session');
 const redis = require('redis');
 
-const redisClient = redis.createClient({
-  url: `redis://${process.env.REDIS_USER}:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
-});
+let redisClient;
+if (process.env.NODE_ENV !== 'test') {
+  redisClient = redis.createClient({
+    url: `redis://${process.env.REDIS_USER}:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+  });
+}
 
 const RedisStore = require('connect-redis')(session);
 const winstonOptions = require('./config/winston');
@@ -29,26 +32,27 @@ const app = express();
 
 app.set('trust proxy', 1);
 
-redisClient.on('error', (err) => {
-  logger.error('Redis error: ', err);
-});
+if (process.env.NODE_ENV !== 'test') {
+  redisClient.on('error', (err) => {
+    logger.error('Redis error: ', err);
+  });
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    name: process.env.APP_NAME,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }, // Note that the cookie-parser module is no longer needed
-    store: new RedisStore({
-      host: process.env.REDIS_HOST,
-      port: process.env.REDIS_PORT,
-      client: redisClient,
-      ttl: 86400,
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET,
+      name: process.env.APP_NAME,
+      resave: false,
+      saveUninitialized: true,
+      cookie: { secure: false }, // Note that the cookie-parser module is no longer needed
+      store: new RedisStore({
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT,
+        client: redisClient,
+        ttl: 86400,
+      }),
     }),
-  }),
-);
-
+  );
+}
 // Define the accepted request type
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
