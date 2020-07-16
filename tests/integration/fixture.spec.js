@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const request = require('supertest');
-const app = require('../src/app');
-const Fixture = require('../src/models/fixture');
+const app = require('../../src/app');
+const Fixture = require('../../src/models/fixture');
 const {
   setUpDatabase,
   userOne,
@@ -9,7 +9,7 @@ const {
   teamOneID,
   teamOne,
   fixtureOneID,
-} = require('./fixtures/db');
+} = require('../fixtures/db');
 
 /* eslint-disable no-undef */
 beforeEach(setUpDatabase);
