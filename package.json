@@ -2,7 +2,10 @@
   "name": "sterling-backend-challenge",
   "version": "1.0.0",
   "description": "Create an API that serves the latest scores of fixtures of matches in a “**Mock Premier League**”",
-  "main": "index.js",
+  "main": "server.js",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "pretest": "NODE_ENV=test",
     "test": "NODE_PATH=./ NODE_ENV=test jest --coverage  --watch --notify --runInBand --forceExit",
