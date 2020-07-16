@@ -67,7 +67,7 @@ npm run test
 ## API
 
 The API is hosted at
-[Api URL]()
+[Api URL](https://sterling-backend-challenge.herokuapp.com/api/v1)
 
 ## API Documentation
 
