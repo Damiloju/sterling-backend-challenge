@@ -5,7 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: nodejs
     container_name: sterling-backend
     restart: unless-stopped
     env_file: .env
@@ -43,14 +42,16 @@ services:
       - dbdata:/data/db
     networks:
       - app-network
+
   redis:
-    image: redis:alpine
+    image: redis
     container_name: redis
     restart: unless-stopped
-    env_file: .env
+    volumes:
+      - redis-data:/var/lib/redis
+      - redis.conf:/usr/local/etc/redis/redis.conf
     networks:
       - app-network
-
 networks:
   app-network:
     driver: bridge
@@ -58,3 +59,5 @@ networks:
 volumes:
   dbdata:
   node_modules:
+  redis-data:
+  redis.conf:

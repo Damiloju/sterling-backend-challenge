@@ -10,7 +10,9 @@ const expressWinston = require('express-winston');
 const session = require('express-session');
 const redis = require('redis');
 
-const redisClient = redis.createClient();
+const redisClient = redis.createClient({
+  host: process.env.REDIS_HOST || '127.0.0.1',
+});
 const RedisStore = require('connect-redis')(session);
 const winstonOptions = require('./config/winston');
 
