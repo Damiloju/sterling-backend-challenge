@@ -39,7 +39,7 @@ app.use(
     cookie: { secure: false }, // Note that the cookie-parser module is no longer needed
     store: new RedisStore({
       host: process.env.REDIS_HOST,
-      port: process.env.REDIST_PORT,
+      port: process.env.REDIS_PORT,
       client: redisClient,
       ttl: 86400,
     }),
