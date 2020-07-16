@@ -42,7 +42,7 @@ To install and run this project you would need to have listed stack installed:
 - To run:
 
 ```sh
-git clone <hgit@github.com:Damiloju/sterling-backend-challenge.git>
+git clone <git@github.com:Damiloju/sterling-backend-challenge.git>
 cd sterling-backend-challenge
 npm install
 copy .env.example  .env
