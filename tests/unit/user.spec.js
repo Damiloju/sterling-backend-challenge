@@ -8,7 +8,7 @@ const { setUpDatabase, userOne } = require('../fixtures/db');
 beforeEach(setUpDatabase);
 
 describe('User Services', () => {
-  describe('User Creation Service', () => {
+  describe('Create User Service', () => {
     let createUserService;
     const userData = {
       username: 'dongun3',
@@ -48,7 +48,7 @@ describe('User Services', () => {
     });
   });
 
-  describe('Authentication Service', () => {
+  describe('Authenticate User Service', () => {
     let authenticateUserService;
     const userData = {
       email: userOne.email,
