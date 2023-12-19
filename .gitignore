@@ -6,3 +6,4 @@
 /coverage
 .env
 dump.rdb
+.history

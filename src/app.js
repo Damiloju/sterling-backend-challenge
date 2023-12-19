@@ -13,7 +13,7 @@ const redis = require('redis');
 let redisClient;
 if (process.env.NODE_ENV !== 'test') {
   redisClient = redis.createClient({
-    url: `redis://${process.env.REDIS_USER}:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+    url: process.env.REDIS_URL,
   });
 }
 
@@ -45,8 +45,6 @@ if (process.env.NODE_ENV !== 'test') {
       saveUninitialized: true,
       cookie: { secure: false }, // Note that the cookie-parser module is no longer needed
       store: new RedisStore({
-        host: process.env.REDIS_HOST,
-        port: process.env.REDIS_PORT,
         client: redisClient,
         ttl: 86400,
       }),
